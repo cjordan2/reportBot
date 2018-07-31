@@ -81,7 +81,7 @@ class Bot(object):
                 channel=slack_event['event']['channel'],
                 text='he is ok',
                 username=self.name,
-                icon_emoji=':eggplant:'
+                icon_emoji=self.emoji
             )
         else:
             client.api_call(
@@ -89,5 +89,5 @@ class Bot(object):
                 channel='scrumlords',
                 text='fuck off mang',
                 username=self.name,
-                icon_emoji=':eggplant:'
+                icon_emoji=self.emoji
             )
