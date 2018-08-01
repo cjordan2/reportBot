@@ -92,13 +92,31 @@ class Bot(object):
     def pleats_response(self, slack_event):
         client = SlackClient(os.environ.get("BOT_TOKEN"))
 
-        client.api_call(
-            'chat.postMessage',
-            channel='scrumlords',
-            text='Hello!  I did not understand that',
-            username=self.name,
-            icon_emoji=self.emoji
-        )
+        if 'help' in slack_event['event']['text']:
+            client.api_call(
+                    'chat.postEphemeral',
+                    channel=slack_event['event']['channel'],
+                    text='Hello there, my name is ReportBot :wave:\nType `/transsum [branch] [client] [start_date] [end_date] [product]` to submit a report right away\nOr simply type `/transsum` for a report submission dialog prompt',
+                    user=slack_event['event']['user'],
+                    username=self.name,
+                    icon_emoji=self.emoji
+            )
+        elif 'morning' in slack_event['event']['text']:
+            client.api_call(
+                'chat.postMessage',
+                channel=slack_event['event']['channel'],
+                text='There he is!',
+                username=self.name,
+                icon_emoji=self.emoji
+            )
+        else:
+            client.api_call(
+                'chat.postMessage',
+                channel='scrumlords',
+                text='Hello!  I did not understand that',
+                username=self.name,
+                icon_emoji=self.emoji
+            )
 
     def upload_report(self, channel, title, start_date, end_date, branch, client, name):
         """
