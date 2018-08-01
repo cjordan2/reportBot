@@ -105,6 +105,29 @@ def hears():
     return make_response("[NO EVENT IN SLACK REQUEST] These are not the droids\
                          you're looking for.", 404, {"X-Slack-No-Retry": 1})
 
+                         
+@app.route("/transsum", methods=["GET", "POST"])
+def trans_sum():
+    #slash_event = json.loads(request.data)
+    print(request.form)
+    params = request.form['text'].split()
+    if len(params) < 5 and len(params) > 1:
+        return make_response("Sorry, I didn't get enough data for a Trans Sum report\n" \
+            "Try just /transsum instead",200,)
+    elif len(params) == 0:
+        print("No params provided...dialog.open here")
+        return make_response("This will open a dialog soon!")
+    else:
+        branch = params[0]
+        client = params[1]
+        start_date = params[2]
+        end_date = params[3]
+        product = params[4]
+        print("Branch:", branch, " Client:", client, \
+            " StartDate:", start_date, " EndDate:", end_date, \
+            " Product:", product)
+        return make_response("Let me get that Trans Sum report for you",200,)
+        
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
