@@ -74,7 +74,6 @@ class Bot(object):
 
     def pleats_response(self, slack_event):
         client = SlackClient(os.environ.get("BOT_TOKEN"))
-        emoji = os.environ.get("BOT_EMOJI")
 
         if 'pleats' in slack_event['event']['text']:
             client.api_call(
@@ -82,7 +81,7 @@ class Bot(object):
                 channel=slack_event['event']['channel'],
                 text='he is ok',
                 username=self.name,
-                icon_emoji=emoji
+                icon_emoji=self.emoji
             )
         elif 'morning' in slack_event['event']['text']:
             client.api_call(
@@ -90,7 +89,7 @@ class Bot(object):
                 channel=slack_event['event']['channel'],
                 text='There he is!',
                 username=self.name,
-                icon_emoji=emoji
+                icon_emoji=self.emoji
             )
         else:
             client.api_call(
@@ -98,5 +97,5 @@ class Bot(object):
                 channel='scrumlords',
                 text='fuck off mang',
                 username=self.name,
-                icon_emoji=emoji
+                icon_emoji=self.emoji
             )
