@@ -74,6 +74,7 @@ class Bot(object):
 
     def pleats_response(self, slack_event):
         client = SlackClient(os.environ.get("BOT_TOKEN"))
+        #print(slack_event['event']['user']);
 
         if 'pleats' in slack_event['event']['text']:
             client.api_call(
@@ -82,6 +83,15 @@ class Bot(object):
                 text='he is ok',
                 username=self.name,
                 icon_emoji=self.emoji
+            )
+        elif 'help' in slack_event['event']['text']:
+            client.api_call(
+                    'chat.postEphemeral',
+                    channel=slack_event['event']['channel'],
+                    text='Here\nis\nthe\nhypothetical\nlist\nof\ncommands',
+                    user=slack_event['event']['user'],
+                    username=self.name,
+                    icon_emoji=self.emoji
             )
         else:
             client.api_call(
