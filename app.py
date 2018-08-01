@@ -33,8 +33,22 @@ def _event_handler(event_type, slack_event):
 
     """
     if event_type == 'app_mention':
-        pyBot.pleats_response(slack_event)
-        return make_response('Pleats', 200, )
+        if 'file' in slack_event['event']['text']:
+            pyBot.upload_report(
+                slack_event['event']['channel'],
+                'Test reportz 4 u',
+                '01/01/01',
+                '02/02/02',
+                '01',
+                'asdkl;ajsdflaksdjf',
+                'NAME'
+            )
+
+            return make_response('File Upload', 200, )
+        else:
+            pyBot.pleats_response(slack_event)
+
+            return make_response('Pleats', 200, )
 
 @app.route("/install", methods=["GET"])
 def pre_install():
