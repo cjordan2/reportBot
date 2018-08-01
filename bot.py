@@ -104,7 +104,7 @@ class Bot(object):
             client.api_call(
                     'chat.postEphemeral',
                     channel=slack_event['event']['channel'],
-                    text='Hello there, my name is ReportBot :wave:\nType `/transsum [branch] [client] [start_date] [end_date] [product]` to submit a report right away\nOr simply type `/transsum` for a report submission dialogue prompt',
+                    text='Hello there, my name is ReportBot :wave:\nType `/transsum [branch] [client] [start_date] [end_date] [product]` to submit a report right away\nOr simply type `/transsum` for a report submission dialog prompt',
                     user=slack_event['event']['user'],
                     username=self.name,
                     icon_emoji=self.emoji
