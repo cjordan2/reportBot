@@ -121,7 +121,7 @@ class Bot(object):
             "dialog.open",
             trigger_id=trigger_id,
             dialog={
-                "title": "Test",
+                "title": "Trans Summary Report",
                 "submit_label": "Press",
                 "callback_id": "dialog-test",
                 "elements": [
