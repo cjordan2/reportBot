@@ -133,10 +133,8 @@ def trans_sum():
         trigger_id = request.form['trigger_id']
         user_id = request.form['user_id']
         print(trigger_id, user_id)
-        #dialog_test(request.form['trigger_id'])
         pyBot.dialog_test(trigger_id, user_id)
-        return make_response('Open Dialog...', 200,)
-        #return make_response("This will open a dialog soon!",200,)
+        return make_response('', 200)
     else:
         branch = params[0]
         client = params[1]
