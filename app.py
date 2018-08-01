@@ -146,14 +146,24 @@ def trans_sum():
         print("Branch:", branch, " Client:", client, \
             " StartDate:", start_date, " EndDate:", end_date, \
             " Product:", product)
+        pyBot.upload_report('scrumlords', 'Client Transaction Summary', start_date, end_date, branch, client, product)
         return make_response("Let me get that Trans Sum report for you",200,)
         
 
 @app.route("/dialog-test", methods=["GET","POST"])
 def dialog_submit():
-    print(request.form)
-    print("Hello")
+
+    submission = json.loads(request.form["payload"])
+    print(submission["submission"]['branch_no'])
+    branch_no = submission["submission"]['branch_no']
+    client_no = submission["submission"]['client_no']
+    start_date = submission["submission"]['start_date']
+    end_date = submission["submission"]['end_date']
+    product = submission["submission"]['product']
+    
+    pyBot.upload_report('scrumlords', 'Client Transaction Summary', start_date, end_date, branch_no, client_no, product)
+
     return make_response("", 200)
-        
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
