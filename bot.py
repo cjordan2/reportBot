@@ -74,7 +74,6 @@ class Bot(object):
 
     def pleats_response(self, slack_event):
         client = SlackClient(os.environ.get("BOT_TOKEN"))
-        #print(slack_event['event']['user']);
 
         if 'pleats' in slack_event['event']['text']:
             client.api_call(
