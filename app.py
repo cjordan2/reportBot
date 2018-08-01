@@ -139,7 +139,7 @@ def trans_sum():
 def dialog_submit():
     print(request.form)
     print("Hello")
-    return make_response('This is a test')
+    return make_response("", 200)
         
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
