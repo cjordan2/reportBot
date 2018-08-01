@@ -119,6 +119,41 @@ def hears():
     return make_response("[NO EVENT IN SLACK REQUEST] These are not the droids\
                          you're looking for.", 404, {"X-Slack-No-Retry": 1})
 
+                         
+@app.route("/transsum", methods=["GET", "POST"])
+def trans_sum():
+    print(request.form)
+    params = request.form['text'].split()
+    
+    if (len(params) < 5 and len(params) >= 1) or len(params) > 5:
+        return make_response("Sorry, I didn't get enough data for a Trans Sum report\n" \
+            "Try just /transsum instead",200,)
+    elif len(params) == 0:
+        print("No params provided...dialog.open here")
+        trigger_id = request.form['trigger_id']
+        user_id = request.form['user_id']
+        print(trigger_id, user_id)
+        #dialog_test(request.form['trigger_id'])
+        pyBot.dialog_test(trigger_id, user_id)
+        return make_response('Open Dialog...', 200,)
+        #return make_response("This will open a dialog soon!",200,)
+    else:
+        branch = params[0]
+        client = params[1]
+        start_date = params[2]
+        end_date = params[3]
+        product = params[4]
+        print("Branch:", branch, " Client:", client, \
+            " StartDate:", start_date, " EndDate:", end_date, \
+            " Product:", product)
+        return make_response("Let me get that Trans Sum report for you",200,)
+        
 
+@app.route("/dialog-test", methods=["GET","POST"])
+def dialog_submit():
+    print(request.form)
+    print("Hello")
+    return make_response('This is a test')
+        
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

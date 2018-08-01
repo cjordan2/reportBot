@@ -114,3 +114,58 @@ class Bot(object):
 
         with io.StringIO(generated_report) as file:
             self.upload_file(file, channel, title)
+
+    def dialog_test(self, trigger_id, user_id):
+        client = SlackClient(os.environ.get("BOT_TOKEN"))
+        open_dialog = client.api_call(
+            "dialog.open",
+            trigger_id=trigger_id,
+            dialog={
+                "title": "Test",
+                "submit_label": "Press",
+                "callback_id": "dialog-test",
+                "elements": [
+                    {
+                        "label": "Branch",
+                        "type": "text",
+                        "name": "branch_no",
+                    },
+                    {
+                        "label": "Client",
+                        "type": "text",
+                        "name": "client_no",
+                    },
+                    {
+                        "label": "Start Date",
+                        "type": "text",
+                        "name": "start_date",
+                    },
+                    {
+                        "label": "End Date",
+                        "type": "text",
+                        "name": "end_date",
+                    },
+                    {
+                        "label": "Product",
+                        "type": "select",
+                        "name": "product",
+                        "placeholder": "Select a product",
+                        "options": [
+                            {
+                                "label": "DDS",
+                                "value": "dds"
+                            },
+                            {
+                                "label": "RCX",
+                                "value": "rcx"
+                            },
+                            {
+                                "label": "Both",
+                                "value": "ddsrcx"
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+        print(open_dialog)
