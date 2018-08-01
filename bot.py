@@ -2,8 +2,11 @@
 """
 Python Slack Bot class for use with the pythOnBoarding app
 """
+import io
 import os
 import message
+
+import report
 
 from slackclient import SlackClient
 
@@ -72,22 +75,42 @@ class Bot(object):
         # bot token
         self.client = SlackClient(authed_teams[team_id]["bot_token"])
 
+    def upload_file(self, file, channel, title):
+        """
+        Uploads a file as the method name suggests
+        """
+        client = SlackClient(os.environ.get("BOT_TOKEN"))
+
+        client.api_call(
+            'files.upload',
+            channels=channel,
+            file=file,
+            title=title
+        )
+
+
     def pleats_response(self, slack_event):
         client = SlackClient(os.environ.get("BOT_TOKEN"))
 
-        if 'pleats' in slack_event['event']['text']:
-            client.api_call(
-                'chat.postMessage',
-                channel=slack_event['event']['channel'],
-                text='he is ok',
-                username=self.name,
-                icon_emoji=self.emoji
-            )
-        else:
-            client.api_call(
-                'chat.postMessage',
-                channel='scrumlords',
-                text='fuck off mang',
-                username=self.name,
-                icon_emoji=self.emoji
-            )
+        client.api_call(
+            'chat.postMessage',
+            channel='scrumlords',
+            text='Hello!  I did not understand that',
+            username=self.name,
+            icon_emoji=self.emoji
+        )
+
+    def upload_report(self, channel, title, start_date, end_date, branch, client, name):
+        """
+        Generates a report and uploads it
+        """
+        generated_report = report.get_report(
+            start_date,
+            end_date,
+            branch,
+            client,
+            name
+        )
+
+        with io.StringIO(generated_report) as file:
+            self.upload_file(file, channel, title)
